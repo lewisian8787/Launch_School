@@ -1,7 +1,6 @@
-def method(array)
-  new_array = array.join
+def value(n)
+  puts n
+  n
 end
-array1 = ["I", "am", "a", "little", "fox"]
-puts array1
-result = method(array1)
-puts result
+
+puts value(3) + value(5) * value(7)
