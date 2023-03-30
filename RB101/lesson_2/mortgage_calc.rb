@@ -85,7 +85,9 @@ loop do # outer loop
   (1 - (1 + monthly_interest_rate)**(-loan_length.to_i)))
   rounded_monthly_payment = monthly_payment.round(2)
 
-  prompt("With those terms your monthly repayments would be" \
+  prompt("Your loan amount would be $#{loan_amount}.")
+
+  prompt("Your monthly repayments would be" \
          " $#{rounded_monthly_payment} over a term of #{loan_length} months.")
 
   prompt("The total amount of interest you would pay would be $" \
