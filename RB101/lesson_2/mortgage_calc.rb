@@ -41,7 +41,7 @@ end
 def prompt_loan_amount # helper method to collect loan amount
   loan_amount = nil
   loop do
-    prompt(MESSAGES["loan_amount_question"])    
+    prompt(MESSAGES["loan_amount_question"])
     print '$'
     loan_amount = gets.chomp.gsub(',', '').gsub('$', '')
 
