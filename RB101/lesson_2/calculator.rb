@@ -1,10 +1,6 @@
-# ask the user for two numbers
-# ask the user for an operation to perform
-# perform the operation on the two numbers
-# output the result
+require 'yaml'
 
-# answer = Kernel.gets
-# Kernel.puts answer
+MESSAGES = YAML.load_file("calculator_messages.yml")
 
 def prompt(message)
   puts "=> #{message}"
@@ -27,14 +23,14 @@ def operation_to_message(op)
   end
 end
 
-prompt("Welcome to Calculator! Enter your name:")
+prompt(MESSAGES["welcome"])
 
 name = ''
 loop do
   name = gets.chomp
 
   if name.empty?()
-    prompt("Make sure to use a valid name.")
+    prompt(MESSAGES["valid_name"])
   else
     break
   end
