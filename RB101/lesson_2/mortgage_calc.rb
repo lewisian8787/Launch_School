@@ -12,6 +12,7 @@ def prompt_user_name
   name = gets.chomp
   while name.match?(/\A\s*\z/)
     prompt(MESSAGES["name_empty"])
+    name = gets.chomp
   end
   name
 end
