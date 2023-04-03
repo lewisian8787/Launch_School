@@ -86,9 +86,9 @@ end
 
 def valid_loan_length?(num)
   if num.to_f < 1 || num.to_f > 35
-    return false
+    false
   else
-    return true
+    true
   end
 end
 
