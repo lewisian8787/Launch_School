@@ -37,7 +37,7 @@ def prompt_loan_length
     break if valid_loan_length?(loan_length)
     prompt(MESSAGES["invalid_loan_length"])
   end
-  loan_length.to_i
+  loan_length.to_f
 end
 
 def prompt_apr_amount
@@ -66,26 +66,30 @@ end
 def confirm_loan_length(loan_length, loan_amount)
   system "clear"
   prompt("You have entered $#{loan_amount} over a period" \
-  " of #{loan_length} .")
+  " of #{loan_length} years.")
 end
 
 def confirm_apr_amount(apr_amount, loan_length, loan_amount)
   system "clear"
   prompt("You have entered $#{loan_amount}, over a period" \
-         " of #{loan_length} months," \
+         " of #{loan_length} years," \
         " at a rate of #{apr_amount}% APR.")
 end
 
 def confirm_repayments(loan_amount, apr_amount, loan_length, payment)
   prompt("For a loan of $#{loan_amount}, at #{apr_amount}% APR," \
-         " over a term of #{loan_length} months, your monthly repayments " \
+         " over a term of #{loan_length} years, your monthly repayments " \
          "would be $#{payment}.")
 end
 
 # boolean methods
 
 def valid_loan_length?(num)
-  num.to_i.to_s == num && num.to_f >= 1 && num.to_f <= 120
+  if num.to_f < 1 || num.to_f > 35
+    return false
+  else
+    return true
+  end
 end
 
 def valid_loan_amount?(num)
@@ -116,11 +120,11 @@ def calculate_monthly_payment(loan_amount, apr_amount, loan_length)
   monthly_interest_rate = apr_amount / (12 * 100)
 
   if apr_amount == 0
-    zero_apr_monthly_payment = loan_amount / loan_length
+    zero_apr_monthly_payment = loan_amount / (loan_length * 12)
     zero_apr_monthly_payment.round(2)
   else
     monthly_payment = loan_amount * (monthly_interest_rate /
-      (1 - (1 + monthly_interest_rate)**(-loan_length)))
+      (1 - (1 + monthly_interest_rate)**(-loan_length * 12)))
     monthly_payment.round(2)
   end
 end
