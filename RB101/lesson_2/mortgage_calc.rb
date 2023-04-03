@@ -66,7 +66,7 @@ end
 def confirm_loan_length(loan_length, loan_amount)
   system "clear"
   prompt("You have entered $#{loan_amount} over a period" \
-  " of #{loan_length} months.")
+  " of #{loan_length} .")
 end
 
 def confirm_apr_amount(apr_amount, loan_length, loan_amount)
@@ -80,11 +80,6 @@ def confirm_repayments(loan_amount, apr_amount, loan_length, payment)
   prompt("For a loan of $#{loan_amount}, at #{apr_amount}% APR," \
          " over a term of #{loan_length} months, your monthly repayments " \
          "would be $#{payment}.")
-end
-
-def display_total_interest(payment, loan_length, loan_amount)
-  total_interest = total_interest(payment, loan_length.to_i, loan_amount.to_f)
-  prompt("The total interest you would pay would be $#{total_interest}")
 end
 
 # boolean methods
@@ -120,8 +115,9 @@ def calculate_monthly_payment(loan_amount, apr_amount, loan_length)
   apr_amount = apr_amount.to_f
   monthly_interest_rate = apr_amount / (12 * 100)
 
-  if monthly_interest_rate == 0
-    loan_amount / loan_length
+  if apr_amount == 0
+    zero_apr_monthly_payment = loan_amount / loan_length
+    zero_apr_monthly_payment.round(2)
   else
     monthly_payment = loan_amount * (monthly_interest_rate /
       (1 - (1 + monthly_interest_rate)**(-loan_length)))
@@ -162,8 +158,6 @@ loop do
   payment = calculate_monthly_payment(loan_amount, apr_amount, loan_length)
 
   confirm_repayments(loan_amount, apr_amount, loan_length, payment)
-
-  display_total_interest(payment, loan_length, loan_amount)
 
   break unless should_try_again?
 end
