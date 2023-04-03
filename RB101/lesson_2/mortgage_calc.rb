@@ -13,7 +13,6 @@ def prompt_user_name
   while name.match?(/\A\s*\z/)
     prompt(MESSAGES["name_empty"])
   end
-
   name
 end
 
