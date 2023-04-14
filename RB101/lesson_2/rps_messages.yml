@@ -1,0 +1,10 @@
+
+invalid_choice: "That's not a valid choice."
+welcome_message: "Welcome to Rock, Paper, Scissors, Lizard or Spock! Are you ready to play?"
+user_choices: "Decide on your entry and enter the corresponding shorthand (shown in brackets). Rock (r), paper (p), Scissors (s), Lizard (l) or Spock (sp)."
+play_again: "Do you want to play again? (y/n)"
+win_prompt: "Congratulations, you won!"
+lose_prompt: "You lost. Better luck next time!"
+tie_prompt: "You tied!"
+end_win_message: "Congrationions you won! We hope to see you again soon."
+end_loss_message: "Sorry, you lost. We hope to see you again soon!"
