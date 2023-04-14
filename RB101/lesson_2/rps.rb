@@ -74,7 +74,7 @@ def calculate_user_score(display_winner)
   display_winner.include?('won') ? 1 : 0
 end
 
-def calc_computer_score(display_winner)
+def calc_comp_score(display_winner)
   display_winner.include?('lost') ? 1 : 0
 end
 
@@ -102,8 +102,8 @@ user_score = 0
 computer_score = 0
 
 loop do
-welcome_and_ready?()
-system "clear"
+  welcome_and_ready?()
+  system "clear"
   loop do
     user_choice = prompt_user_choice()
 
@@ -114,7 +114,7 @@ system "clear"
     display_winner(user_choice, computer_choice)
 
     user_score += calculate_user_score(OUTCOMES[user_choice][computer_choice])
-    computer_score += calc_computer_score(OUTCOMES[user_choice][computer_choice])
+    computer_score += calc_comp_score(OUTCOMES[user_choice][computer_choice])
 
     display_score(user_score, computer_score)
 
