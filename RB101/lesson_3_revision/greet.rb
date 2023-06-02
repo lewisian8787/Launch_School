@@ -1,5 +1,9 @@
-def greeting(name)
-  puts "Hello #{name}!"
+top
+
+def top
+  bottom
 end
 
-greeting("Ian")
+def bottom
+  puts "Reached the bottom"
+end
