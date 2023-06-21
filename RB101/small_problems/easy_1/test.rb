@@ -1,6 +1,12 @@
-array = [1, 2, 3 ,4, 5]
+num = "77"
+friends = {1 => "Bill", 5 => "Bob", 3 => "Jake", 4 => "Aaron"}
 
-array.select do |num|
-  puts num if num.odd?
+friends.each do |num, name|
+  puts "#{name} wants a secret number"
+  if name == "Bob"
+    puts "'Ok', says Joey. Here is the secret number:"
+    puts "#{num}"
+  else
+    puts "No way!"
+  end
 end
-dfdfjf
