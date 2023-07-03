@@ -1,10 +1,6 @@
-animal = "dog"
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-loop do 
-  animal = "cat"
-  second_animal = "dog"
-  break
-end
-
-puts animal
-puts second_animal
+ p new_array = arr.select do |n|
+   n + 1
+ end
+ 
