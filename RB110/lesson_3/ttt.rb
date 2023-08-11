@@ -76,6 +76,11 @@ def detect_winner(brd)
   nil
 end
 
+def joinor(brd)
+  brd.each do |num| 
+  end
+end
+
 loop do
   board = initialize_board
 
