@@ -62,35 +62,50 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def computer_goes_first!(brd)
+    brd[5] = COMPUTER_MARKER
+end
+
 def computer_places_piece!(brd)
-  move_counter = 0
+  square = nil
   WINNING_LINES.each do |line|
-    if brd.values_at(line[0], line[1]).count(PLAYER_MARKER) == 2
-      if empty_squares(brd).include?(line[2])
-        brd[line[2]] = COMPUTER_MARKER
-        move_counter += 1
-        break
-      end
-    elsif brd.values_at(line[1], line[2]).count(PLAYER_MARKER) == 2
-      if empty_squares(brd).include?(line[0])
-        brd[line[0]] = COMPUTER_MARKER
-        move_counter += 1
-        break
-      end
-    elsif brd.values_at(line[0], line[2]).count(PLAYER_MARKER) == 2
-      if empty_squares(brd).include?(line[1])
-        brd[line[1]] = COMPUTER_MARKER
-        move_counter += 1
-        break
-      end
-    end
+    square = find_winning_square(line, brd)
+    break if square
   end
-  if move_counter == 0
+
+  WINNING_LINES.each do |line|
+    break if square
+    square = find_at_risk_square(line, brd)
+    break if square
+  end
+
+  if square == nil && brd[5] == ' '
+    brd[5] = COMPUTER_MARKER
+    return 
+  end
+
+  if square == nil
     square = empty_squares(brd).sample
-    brd[square] = COMPUTER_MARKER
+  end
+
+  brd[square] = COMPUTER_MARKER
+end
+
+def find_at_risk_square(line, board)
+  if board.values_at(*line).count(PLAYER_MARKER) == 2
+    board.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  else
+    nil
   end
 end
 
+def find_winning_square(line, board)
+  if board.values_at(*line).count(COMPUTER_MARKER) == 2
+    board.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  else
+    nil
+  end
+end
 
 def board_full?(brd)
   empty_squares(brd).empty?
@@ -122,22 +137,37 @@ def joinor(array, seperator = ', ', arg3 = 'or' )
   end
 end
 
-loop do
+loop do # 1 to 5 loop
   computer_score = 0
   player_score = 0
-  loop do
+  loop do # each game loop
+    system 'clear'
+    display_score(player_score, computer_score)
     board = initialize_board
+    display_board(board)
+    prompt "Choose who goes first: Player (p) or Computer (c) or Random (r)"
+    who_first = gets.chomp
 
-    loop do
-      display_score(player_score, computer_score)
-      display_board(board)
-
-      player_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-
-      computer_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
+    if who_first == 'r'
+      who_first = ['p', 'c'].sample
     end
+
+    if who_first == 'c'
+      prompt "Computer goes first"
+      computer_goes_first!(board)
+    else
+      prompt "Player goes first."
+    end
+      loop do # moves loop
+        display_score(player_score, computer_score)
+        display_board(board)
+
+        player_places_piece!(board)
+        break if someone_won?(board) || board_full?(board)
+        
+        computer_places_piece!(board)
+        break if someone_won?(board) || board_full?(board)
+      end
 
     display_board(board)
 
@@ -159,7 +189,7 @@ loop do
 
     if player_score == 5
       break
-    elsif player_score == 5
+    elsif computer_score == 5
       break
     end
 
