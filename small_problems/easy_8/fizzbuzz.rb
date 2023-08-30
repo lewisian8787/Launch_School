@@ -22,15 +22,16 @@ def fizzbuzz(int1, int2)
   array = []
   (int1..int2).each do |num|
     if num % 3 > 0 && num % 5 > 0
-
       array << num
+    elsif num % 5 == 0 && num % 3 == 0
+      array << "FizzBuzz"
     elsif num % 3 == 0
       array << "Fizz"
     elsif num % 5 == 0
       array << "Buzz"
     end
   end
-  array
+  array.join(', ')
 end
 
  p fizzbuzz(1, 15) # -> 1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz
