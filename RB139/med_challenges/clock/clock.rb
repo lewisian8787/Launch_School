@@ -1,35 +1,46 @@
 class Clock
-    attr_accessor :hourly_time, :minutes_time
-    
-    def self.at(hour, minutes = 0)
-        instance = Clock.new
-        if minutes.to_s.length < 2 
-            instance.minutes_time = 
-            
-        instance.minutes_time = minutes if minutes != nil
-        instance.hourly_time = hour
-        instance
-    end
-    
-    def to_s
-        current_hour = "00"
-        current_minutes = "00"
-        returned_time = "#{current_hour}:#{current_minutes}"
-        
-        if self.hourly_time <= 10
-            current_hour = "0#{hourly_time}"
-        else
-            current_hour = "#{hourly_time}"
-        end
-        
-        if self.minutes_time != nil && self.minutes_tine <= 10
-            current_minutes = "0#{minutes_time}"
-        else
-            current_minutes = "#{minutes_time}"
-        end 
-        
-        returned_time 
-    end
-end
+  attr_reader :time 
 
-p Clock.at(8).to_s
+  def initialize(time = '00:00')
+    @time = time
+  end
+
+  def self.at(hour, minutes = 0)
+    formatted_time = format("%02d:%02d", hour, minutes)
+    Clock.new(formatted_time)
+  end
+
+  def +(minutes)
+    hours, current_minutes = @time.split(':').map(&:to_i)
+
+    total_minutes = current_minutes + minutes
+
+    new_hours = hours + (total_minutes / 60)
+    new_minutes = total_minutes % 60
+
+    new_hours = new_hours % 24
+
+    new_time = format("%02d:%02d", new_hours, new_minutes)
+
+    Clock.new(new_time)
+  end
+  
+   def -(minutes)
+    hours, current_minutes = @time.split(':').map(&:to_i)
+    new_minutes = current_minutes - minutes 
+    hours == 0 ? new_hours = 24 : new_hours = hours
+
+    if new_minutes < 0
+      new_minutes = 60 - new_minutes.abs
+      new_hours -= 1
+    end
+
+    new_time = format("%02d:%02d", new_hours, new_minutes)
+
+    Clock.new(new_time)
+  end
+  
+  def to_s
+    @time
+  end
+end
